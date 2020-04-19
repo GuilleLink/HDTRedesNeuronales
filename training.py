@@ -64,7 +64,7 @@ def inflate_Thetas(thetas, shape):
 
 #Forward propagation (2.2) (vista en clase)
 def feed_forward(thetas, x):
-    a = [x]
+    a = [np.array(x)]
     for i in range(len(thetas)):
         a.append(
             sigmoide(
