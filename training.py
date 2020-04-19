@@ -82,7 +82,7 @@ def backPropagation(flat_thetas, shapes, X, Y):
     deltas = [*range(layers-1), a[-1]-Y]
     Deltas = []
     for i in range(layers-2,0,-1):
-        deltas[i] = np.matmul(deltas[i+1],(np.delete(thetas[i],0,1)))*(a[i]*(1-act_array[i]))
+        deltas[i] = np.matmul(deltas[i+1],(np.delete(thetas[i],0,1)))*(a[i]*(1-a[i]))
         
     for i in range(layers-1):
         Deltas.append(
@@ -97,11 +97,4 @@ def backPropagation(flat_thetas, shapes, X, Y):
     Deltas = np.asarray(Deltas)
         
     return flat_thetas_function(Deltas)
-    
-
-    #deltas = [*range(lay-1), activate[-1]-result]
-    #for i in range(lay-2,0,-1):
-    #    deltas[i] = np.matmul(deltas[i+1],(np.delete(theta[i],0,1)))*(activate[i]*(1-activate[i]))
-    #return deltas
-   
     
