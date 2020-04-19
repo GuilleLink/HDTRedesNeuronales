@@ -15,6 +15,19 @@ from functools import reduce
 #2.4 Backward Propagation (Jacobian)
 #2.5 
 #3
+#Lista de mnist del significado del label de la columna 1 para todos los elementos del csv
+mnist = {
+    0: 'T-shirt/top',
+    1: 'Trouser',
+    2: 'Pullover',
+    3: 'Dress',
+    4: 'Coat',
+    5: 'Sandal',
+    6: 'Shirt',
+    7: 'Sneaker',
+    8: 'Bag',
+    9: 'Ankle boot'
+}
 
 #Se hace una matriz de randoms y se divide entre 1000
 #matRand = np.random.rand(10,10)
