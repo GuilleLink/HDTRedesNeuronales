@@ -6,7 +6,7 @@ from scipy import optimize as op
 
 #Lectura de datos
 X_train, y_train = mnist_reader.load_mnist('', kind='train')
-X_test, y_test = mnist_reader.load_mnist('', kind='t10k')
+xTest, yTest = mnist_reader.load_mnist('', kind='t10k')
 
 #La matriz de entrenamiento se divide entre 1000 por consejo del profesor Samuel
 X = X_train/1000.0
@@ -19,7 +19,7 @@ Y = (y == np.array(range(10))).astype(int)
 #Solo se uso una capa por sugerencia del profesor
 NeuronalNetwork = np.array([
         n,
-        397,
+        130,
         10
     ])
 theta_shapes = np.hstack((
@@ -43,10 +43,29 @@ result = op.minimize(
     args = (theta_shapes, X, Y),
     method = 'L-BFGS-B',
     jac = backPropagation,
-    options = {'disp': True, 'maxiter': 1500}
+    options = {'disp': True, 'maxiter': 150}
 )
 print("\n---------------- OPTIMIZED ----------------\n")
 
-np.savetxt('thetas2.0.txt', result.x)
+#np.savetxt('thetas2.0.txt', result.x)
+
 thetaResult = np.loadtxt('thetas2.0.txt')
 thetaResult.size
+
+xTest = xTest/1000
+mT,nT = xTest.shape
+yTest = yTest.reshape(mT,1)
+
+inflatedThetas = inflate_Thetas(thetaResult, theta_shapes)
+a_result = feed_forward(inflatedThetas, xTest)
+
+maxed = np.argmax(a_result[-1], axis = 1)
+accuracy = 0
+for i in range(len(a_result[-1])):
+    if(maxed[i] == yTest[i][0]):
+        accuracy += 1
+success = accuracy*100/len(a_result[-1])
+fail = 100.0 - success
+
+print("Porcentaje de acierto: ", success)
+print("Porcentaje de error: ", fail)

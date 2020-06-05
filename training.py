@@ -42,24 +42,23 @@ flat_thetas_function = lambda list_of_arrays: reduce(
 #Funcion sigmoide que se le va a aplicar a todos los valores de la matriz
 def sigmoide(matrix):
     size = matrix.shape
-    for i in range(0, size[0]):
-        for j in range(0, size[1]):
+    for i in range(size[0]):
+        for j in range(size[1]):
             matrix[i][j] = 1/( 1 + math.exp(-matrix[i][j]))
-    size = size[0] * size[1]
-    return matrix, size
+    return matrix  
 
 #Convierte el array de thetas en matriz
-def inflate_Thetas(thetas, shape):
-    layers = len(shape) + 1
-    sizes = [shape[0]*shape[1] for shape in shape]
+def inflate_Thetas(flat_thetas, shapes):
+    layers = len(shapes) + 1
+    sizes = [shape[0] * shape[1] for shape in shapes]
     steps = np.zeros(layers, dtype=int)
-    
-    for i in range(layers-1):
-        steps[i+1]=steps[i]+sizes[i]
-        
-    return[
-        thetas[steps[i]: steps[i+1]].reshape(*shape[i])
-        for i in range(layers-1)
+
+    for i in range(layers - 1):
+        steps[i + 1] = steps[i] + sizes[i]
+
+    return [
+        flat_thetas[steps[i]: steps[i + 1]].reshape(*shapes[i])
+        for i in range(layers - 1)
     ]
 
 #Forward propagation (2.2) (vista en clase)
